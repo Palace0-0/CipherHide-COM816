@@ -1,4 +1,6 @@
 from cryptography.fernet import Fernet
+from cryptography.hazmat.primitives.asymmetric import rsa, padding
+from cryptography.hazmat.primitives import serialization, hashes
 
 def gerar_chave(self):
 
@@ -15,4 +17,14 @@ def gerar_chave(self):
         return key
 
     else:
+        private_key = rsa.generate_private_key(
+            public_exponent=65537,
+            key_size=2048
+        )
+
+        public_key = private_key.public_key()
+        self.entry_key.delete(0, "end")
+        self.entry_key.insert(0, public_key)
+        print(private_key)
         print("Gerar chave RSA ainda não implementado")
+
