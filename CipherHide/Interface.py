@@ -1,4 +1,5 @@
 from cryptography.fernet import Fernet
+import Funcoes as func
 import customtkinter as ctk
 
 ctk.set_appearance_mode("dark")
@@ -46,9 +47,10 @@ class App(ctk.CTk):
         self.btn_gerar = ctk.CTkButton(
             self.frame_esquerdo,
             text="Gerar chave",
-            command=self.gerar_chave
+            command=lambda: func.gerar_chave(self)
         )
-        self.btn_gerar.pack(pady=20)
+
+        self.btn_gerar.pack(pady = 10)
 
         # =============================
         # FRAME DIREITO (CRIPTOGRAFIA)
@@ -79,18 +81,7 @@ class App(ctk.CTk):
     # FUNÇÕES
     # =============================
 
-    def gerar_chave(self):
-
-        tipo = self.tipo.get()
-
-        if tipo == "ASE":
-            key = Fernet.generate_key().decode()
-            self.entry_key.delete(0, "end")
-            self.entry_key.insert(0, key)
-
-        else:
-            print("Gerar chave RSA ainda não implementado")
-
+ 
     def criptografar(self):
 
         msg = self.entry_msg.get()
