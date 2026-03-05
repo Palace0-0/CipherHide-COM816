@@ -3,16 +3,6 @@ from cryptography.hazmat.primitives.asymmetric import rsa, padding
 from cryptography.hazmat.primitives import serialization, hashes
 
 
-def estado_campo(self, estado):
-
-    if estado == 1:
-        self.entry_key1.configure(state="readonly")
-        self.entry_key2.configure(state="readonly")
-    else:
-        self.entry_key1.configure(state="normal")
-        self.entry_key2.configure(state="normal")
-
-
 def gerar_chave(self):
 
     tipo = self.tipo.get()
@@ -61,7 +51,6 @@ def gerar_chave(self):
         self.entry_key2.insert(0, private_pem)
 
         print("Par de chaves RSA gerado!")
-
 
 def cripitografar(self):
 
