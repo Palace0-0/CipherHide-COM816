@@ -67,26 +67,26 @@ def cripitografar(self):
 
     msg = self.entry_msg.get()
 
-    key1 = self.entry_key1.get()
-    key2 = self.entry_key2.get()
+    key = self.entry_key_use.get()
+    
 
     # 🔐 SIMÉTRICA
-    if key2 == "":
-
-        f = Fernet(key1.encode())
+    if key[0] != "-":
+        print("A")
+        f = Fernet(key.encode())
 
         token = f.encrypt(msg.encode())
 
         self.entry_msg.delete(0, "end")
-        self.text_result.delete("1.0", "end")
+        self.result.delete(0, "end")
 
-        self.text_result.insert("1.0", token.decode())
+        self.result.insert(0, token.decode())
 
     # 🔐 ASSIMÉTRICA
     else:
-
+        print("B")
         public_key = serialization.load_pem_public_key(
-            key1.encode()
+            key.encode()
         )
 
         ciphertext = public_key.encrypt(
@@ -99,9 +99,9 @@ def cripitografar(self):
         )
 
         self.entry_msg.delete(0, "end")
-        self.text_result.delete("1.0", "end")
+        self.result.delete(0, "end")
 
-        self.text_result.insert("1.0", ciphertext.hex())
+        self.result.insert(0, ciphertext.hex())
 
 def decripitografar(self):
 
