@@ -2,6 +2,14 @@ from cryptography.fernet import Fernet
 from cryptography.hazmat.primitives.asymmetric import rsa, padding
 from cryptography.hazmat.primitives import serialization, hashes
 
+def estado_campo(self, estado):
+    if estado == 1:
+        self.entry_key1.configure(state="readonly")
+        self.entry_key2.configure(state="readonly")
+    else:
+        self.entry_key1.configure(state="normal")
+        self.entry_key2.configure(state="normal")
+
 def gerar_chave(self):
 
     tipo = self.tipo.get()
@@ -24,8 +32,18 @@ def gerar_chave(self):
         )
 
         public_key = private_key.public_key()
-        self.entry_key.delete(0, "end")
-        self.entry_key.insert(0, public_key)
-        print(private_key)
-        print("Gerar chave RSA ainda não implementado")
+        self.entry_key1.delete(0, "end")
+        self.entry_key2.delete(0, "end")
+        self.entry_key1.insert(0, public_key)
+        self.entry_key2.insert(0, private_key)
 
+
+def cripitografar (self):
+    msg = self.entry_msg.get()
+    key1 = self.entry_key1.get()
+    key2= self.entry_key2.get()
+
+    if key2 == "":
+        print("ASE")
+    else:
+        print("RSA")

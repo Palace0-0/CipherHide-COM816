@@ -34,6 +34,7 @@ class App(ctk.CTk):
         titulo = ctk.CTkLabel(self.frame_esquerdo, text="Gerar chave", font=("Arial", 14))
         titulo.grid(row=0, column=0, sticky="w", padx=20, pady=(10, 5))
 
+        #Checkboxs
         self.tipo = ctk.StringVar(value="ASE")
 
         self.radio_ase = ctk.CTkRadioButton(
@@ -52,6 +53,7 @@ class App(ctk.CTk):
         )
         self.radio_rsa.grid(row=2, column=0, columnspan=2, padx=20, pady=5, sticky="ew")
 
+        #Botão
         self.btn_gerar = ctk.CTkButton(
             self.frame_esquerdo,
             text="Gerar chave",
@@ -91,13 +93,14 @@ class App(ctk.CTk):
 
         self.entry_key2 = ctk.CTkEntry(self.frame_direito, width=largura)
         self.entry_key2.grid(row=5, column=0, columnspan=2, padx=20, sticky="ew")
+    
 
         # BOTÕES
 
         self.btn_cripto = ctk.CTkButton(
             self.frame_direito,
             text="Criptografar",
-            command=self.criptografar
+            command= lambda: func.cripitografar(self)
         )
 
         self.btn_cripto.grid(row=6, column=0, pady=20, padx=(20, 10), sticky="e")
