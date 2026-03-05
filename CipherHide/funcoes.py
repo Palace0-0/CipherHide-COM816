@@ -9,8 +9,9 @@ def gerar_chave(self):
     if tipo == "ASE":
         key = Fernet.generate_key().decode()
 
-        self.entry_key.delete(0, "end")
-        self.entry_key.insert(0, key)
+        self.entry_key1.delete(0, "end")
+        self.entry_key2.delete(0, "end")
+        self.entry_key1.insert(0, key)
 
         print("Chave simétrica gerada!")
 

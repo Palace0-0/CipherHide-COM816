@@ -34,13 +34,13 @@ class App(ctk.CTk):
         titulo = ctk.CTkLabel(self.frame_esquerdo, text="Gerar chave", font=("Arial", 14))
         titulo.grid(row=0, column=0, sticky="w", padx=20, pady=(10, 5))
 
-        self.tipo = ctk.StringVar(value="AES")
+        self.tipo = ctk.StringVar(value="ASE")
 
         self.radio_ase = ctk.CTkRadioButton(
             self.frame_esquerdo,
-            text="AES",
+            text="ASE",
             variable=self.tipo,
-            value="AES"
+            value="ASE"
         )
         self.radio_ase.grid(row=1, column=0, columnspan=2, padx=20, pady=5, sticky="ew")
 
@@ -55,7 +55,7 @@ class App(ctk.CTk):
         self.btn_gerar = ctk.CTkButton(
             self.frame_esquerdo,
             text="Gerar chave",
-            command=lambda: func.gerar_chave(self)
+            command=self.gerar_chave
         )
         self.btn_gerar.grid(row=3, column=0, columnspan=2, padx=20, pady=(10, 5), sticky="ew")
 
@@ -121,6 +121,9 @@ class App(ctk.CTk):
     # =============================
     # FUNÇÕES
     # =============================
+
+    def gerar_chave(self):
+        func.gerar_chave(self)
 
     def criptografar(self):
 
