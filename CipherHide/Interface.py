@@ -28,8 +28,11 @@ class App(ctk.CTk):
         self.frame_esquerdo = ctk.CTkFrame(self)
         self.frame_esquerdo.grid(row=0, column=0, padx=15, pady=15, sticky="nsew")
 
-        titulo = ctk.CTkLabel(self.frame_esquerdo, text="Gerar chave", font=("Arial", 16))
-        titulo.pack(pady=15)
+        self.frame_esquerdo.grid_columnconfigure(0, weight=1)
+        self.frame_esquerdo.grid_rowconfigure(4, weight=1)
+
+        titulo = ctk.CTkLabel(self.frame_esquerdo, text="Gerar chave", font=("Arial", 14))
+        titulo.grid(row=0, column=0, sticky="w", padx=20, pady=(10, 5))
 
         self.tipo = ctk.StringVar(value="AES")
 
@@ -39,7 +42,7 @@ class App(ctk.CTk):
             variable=self.tipo,
             value="AES"
         )
-        self.radio_ase.pack(pady=5)
+        self.radio_ase.grid(row=1, column=0, columnspan=2, padx=20, pady=5, sticky="ew")
 
         self.radio_rsa = ctk.CTkRadioButton(
             self.frame_esquerdo,
@@ -47,14 +50,14 @@ class App(ctk.CTk):
             variable=self.tipo,
             value="RSA"
         )
-        self.radio_rsa.pack(pady=5)
+        self.radio_rsa.grid(row=2, column=0, columnspan=2, padx=20, pady=5, sticky="ew")
 
         self.btn_gerar = ctk.CTkButton(
             self.frame_esquerdo,
             text="Gerar chave",
             command=lambda: func.gerar_chave(self)
         )
-        self.btn_gerar.pack(pady=20)
+        self.btn_gerar.grid(row=3, column=0, columnspan=2, padx=20, pady=(10, 5), sticky="ew")
 
         # =============================
         # FRAME DIREITO
