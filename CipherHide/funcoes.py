@@ -38,12 +38,20 @@ def gerar_chave(self):
         self.entry_key2.insert(0, private_key)
 
 
-def cripitografar (self):
+def cripitografar(self):
+
     msg = self.entry_msg.get()
     key1 = self.entry_key1.get()
-    key2= self.entry_key2.get()
+    key2 = self.entry_key2.get()
 
     if key2 == "":
-        print("ASE")
+        f = Fernet(key1.encode())
+
+        token = f.encrypt(msg.encode())
+
+        self.entry_msg.delete(0, "end")
+        self.text_result.delete("1.0", "end")
+        self.text_result.insert("1.0", token)
+
     else:
         print("RSA")
