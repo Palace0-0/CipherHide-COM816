@@ -4,35 +4,40 @@ import customtkinter as ctk
 
 ctk.set_appearance_mode("dark")
 
+
 class App(ctk.CTk):
 
     def __init__(self):
         super().__init__()
 
         self.title("CipherHider")
-        self.geometry("700x350")
+        self.geometry("700x500")
 
-        # configuração da grid principal
+        # =============================
+        # GRID PRINCIPAL
+        # =============================
+
         self.grid_columnconfigure(0, weight=1)
         self.grid_columnconfigure(1, weight=3)
         self.grid_rowconfigure(0, weight=1)
 
         # =============================
-        # FRAME ESQUERDO (GERAR CHAVE)
+        # FRAME ESQUERDO
         # =============================
+
         self.frame_esquerdo = ctk.CTkFrame(self)
-        self.frame_esquerdo.grid(row=0, column=0, padx=10, pady=10, sticky="ns")
+        self.frame_esquerdo.grid(row=0, column=0, padx=15, pady=15, sticky="nsew")
 
-        titulo = ctk.CTkLabel(self.frame_esquerdo, text="Gerar chave")
-        titulo.pack(pady=10)
+        titulo = ctk.CTkLabel(self.frame_esquerdo, text="Gerar chave", font=("Arial", 16))
+        titulo.pack(pady=15)
 
-        self.tipo = ctk.StringVar(value="ASE")
+        self.tipo = ctk.StringVar(value="AES")
 
         self.radio_ase = ctk.CTkRadioButton(
             self.frame_esquerdo,
-            text="ASE",
+            text="AES",
             variable=self.tipo,
-            value="ASE"
+            value="AES"
         )
         self.radio_ase.pack(pady=5)
 
@@ -49,62 +54,107 @@ class App(ctk.CTk):
             text="Gerar chave",
             command=lambda: func.gerar_chave(self)
         )
-
-        self.btn_gerar.pack(pady = 10)
+        self.btn_gerar.pack(pady=20)
 
         # =============================
-        # FRAME DIREITO (CRIPTOGRAFIA)
+        # FRAME DIREITO
         # =============================
+
         self.frame_direito = ctk.CTkFrame(self)
-        self.frame_direito.grid(row=0, column=1, padx=10, pady=10, sticky="nsew")
+        self.frame_direito.grid(row=0, column=1, padx=15, pady=15, sticky="nsew")
 
+        self.frame_direito.grid_columnconfigure((0, 1), weight=1)
+        self.frame_direito.grid_rowconfigure(8, weight=1)
+
+        largura = 450
+
+        # Mensagem
         label_msg = ctk.CTkLabel(self.frame_direito, text="Mensagem")
-        label_msg.pack(pady=5)
+        label_msg.grid(row=0, column=0, sticky="w", padx=20, pady=(20, 5))
 
-        self.entry_msg = ctk.CTkEntry(self.frame_direito, width=400)
-        self.entry_msg.pack(pady=5)
+        self.entry_msg = ctk.CTkEntry(self.frame_direito, width=largura)
+        self.entry_msg.grid(row=1, column=0, columnspan=2, padx=20, sticky="ew")
 
-        label_key = ctk.CTkLabel(self.frame_direito, text="Chave")
-        label_key.pack(pady=5)
+        # Chave 1
+        label_key1 = ctk.CTkLabel(self.frame_direito, text="Chave 1")
+        label_key1.grid(row=2, column=0, sticky="w", padx=20, pady=(15, 5))
 
-        self.entry_key = ctk.CTkEntry(self.frame_direito, width=400)
-        self.entry_key.pack(pady=5)
+        self.entry_key1 = ctk.CTkEntry(self.frame_direito, width=largura)
+        self.entry_key1.grid(row=3, column=0, columnspan=2, padx=20, sticky="ew")
+
+        # Chave 2
+        label_key2 = ctk.CTkLabel(self.frame_direito, text="Chave 2")
+        label_key2.grid(row=4, column=0, sticky="w", padx=20, pady=(15, 5))
+
+        self.entry_key2 = ctk.CTkEntry(self.frame_direito, width=largura)
+        self.entry_key2.grid(row=5, column=0, columnspan=2, padx=20, sticky="ew")
+
+        # BOTÕES
 
         self.btn_cripto = ctk.CTkButton(
             self.frame_direito,
             text="Criptografar",
             command=self.criptografar
         )
-        self.btn_cripto.pack(pady=20)
+
+        self.btn_cripto.grid(row=6, column=0, pady=20, padx=(20, 10), sticky="e")
+
+        self.btn_decripto = ctk.CTkButton(
+            self.frame_direito,
+            text="Decriptografar",
+            command=self.descriptografar
+        )
+
+        self.btn_decripto.grid(row=6, column=1, pady=20, padx=(10, 20), sticky="w")
+
+        # RESULTADO
+
+        label_result = ctk.CTkLabel(self.frame_direito, text="Resultado")
+        label_result.grid(row=7, column=0, sticky="w", padx=20)
+
+        self.text_result = ctk.CTkTextbox(self.frame_direito, height=120)
+        self.text_result.grid(row=8, column=0, columnspan=2, padx=20, pady=10, sticky="nsew")
 
     # =============================
     # FUNÇÕES
     # =============================
 
- 
     def criptografar(self):
 
         msg = self.entry_msg.get()
-        key = self.entry_key.get()
+        key = self.entry_key1.get()
 
-        f = Fernet(key.encode())
-        token = f.encrypt(msg.encode())
+        try:
 
-        print("Mensagem criptografada:")
-        print(token)
+            f = Fernet(key.encode())
+            token = f.encrypt(msg.encode())
+
+            self.text_result.delete("0.0", "end")
+            self.text_result.insert("0.0", token.decode())
+
+        except Exception as e:
+
+            self.text_result.delete("0.0", "end")
+            self.text_result.insert("0.0", f"Erro: {e}")
+
+    def descriptografar(self):
+
+        msg = self.entry_msg.get()
+        key = self.entry_key1.get()
+
+        try:
+
+            f = Fernet(key.encode())
+            texto = f.decrypt(msg.encode())
+
+            self.text_result.delete("0.0", "end")
+            self.text_result.insert("0.0", texto.decode())
+
+        except Exception as e:
+
+            self.text_result.delete("0.0", "end")
+            self.text_result.insert("0.0", f"Erro: {e}")
 
 
 app = App()
 app.mainloop()
-
-
-# Cria objeto com a chave
-# f = Fernet(key)
-# print(key)
-# token = f.encrypt(b"Apude e mulher")
-# print(token)
-
-# validation = input("Digite sua chave para descripitografar")
-
-# if validation == key:
-#     message = f.decrypt(token)
