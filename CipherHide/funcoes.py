@@ -18,7 +18,7 @@ def gerar_chave(self):
     tipo = self.tipo.get()
 
     # 🔐 Criptografia Simétrica
-    if tipo == "ASE":
+    if tipo == "AES":
 
         key = Fernet.generate_key().decode()
 
@@ -110,7 +110,7 @@ def decripitografar(self):
     key1 = self.entry_key1.get()
     key2 = self.entry_key2.get()
 
-    # 🔐 SIMÉTRICA
+    
     if key2 == "":
 
         f = Fernet(key1.encode())
@@ -122,15 +122,18 @@ def decripitografar(self):
 
         self.text_result.insert("1.0", token.decode())
 
-    # 🔐 ASSIMÉTRICA
+    
     else:
 
-        public_key = serialization.load_pem_public_key(
-            key1.encode()
+        private_key = serialization.load_pem_private_key(
+            key2.encode(),
+            password=None
         )
 
-        ciphertext = public_key.decrypt(
-            msg.encode(),
+        cipher = bytes.fromhex(msg)
+
+        ciphertext = private_key.decrypt(
+            cipher,
             padding.OAEP(
                 mgf=padding.MGF1(algorithm=hashes.SHA256()),
                 algorithm=hashes.SHA256(),
@@ -141,4 +144,4 @@ def decripitografar(self):
         self.entry_msg.delete(0, "end")
         self.text_result.delete("1.0", "end")
 
-        self.text_result.insert("1.0", ciphertext.hex())
+        self.text_result.insert("1.0", ciphertext.decode())

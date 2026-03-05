@@ -35,15 +35,15 @@ class App(ctk.CTk):
         titulo.grid(row=0, column=0, sticky="w", padx=20, pady=(10, 5))
 
         #Checkboxs
-        self.tipo = ctk.StringVar(value="ASE")
+        self.tipo = ctk.StringVar(value="AES")
 
-        self.radio_ase = ctk.CTkRadioButton(
+        self.radio_aes = ctk.CTkRadioButton(
             self.frame_esquerdo,
-            text="ASE",
+            text="AES",
             variable=self.tipo,
-            value="ASE"
+            value="AES"
         )
-        self.radio_ase.grid(row=1, column=0, columnspan=2, padx=20, pady=5, sticky="ew")
+        self.radio_aes.grid(row=1, column=0, columnspan=2, padx=20, pady=5, sticky="ew")
 
         self.radio_rsa = ctk.CTkRadioButton(
             self.frame_esquerdo,
@@ -128,23 +128,6 @@ class App(ctk.CTk):
     def gerar_chave(self):
         func.gerar_chave(self)
 
-    def criptografar(self):
-
-        msg = self.entry_msg.get()
-        key = self.entry_key1.get()
-
-        try:
-
-            f = Fernet(key.encode())
-            token = f.encrypt(msg.encode())
-
-            self.text_result.delete("0.0", "end")
-            self.text_result.insert("0.0", token.decode())
-
-        except Exception as e:
-
-            self.text_result.delete("0.0", "end")
-            self.text_result.insert("0.0", f"Erro: {e}")
 
     def descriptografar(self):
 
