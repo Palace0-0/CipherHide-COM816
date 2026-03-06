@@ -1,11 +1,13 @@
 from cryptography.fernet import Fernet
 from cryptography.hazmat.primitives.asymmetric import rsa, padding
 from cryptography.hazmat.primitives import serialization, hashes
-
 import tkinter
 from tkinter import filedialog
 import os
-
+from stegano import lsb
+# -----------------------------
+# FUNÇÕES CRIPITOGRAFIA
+# -----------------------------
 
 def gerar_chave(self):
 
@@ -138,6 +140,11 @@ def decripitografar(self):
 
         self.result.insert(0, ciphertext.decode())
 
+
+# -----------------------------
+# FUNÇÕES ESTEGANOGRAFIA
+# -----------------------------
+
 def selecionar_arquivos(self):
     
     root = tkinter.Tk()
@@ -157,3 +164,15 @@ def selecionar_arquivos(self):
         
     else:
         print("No file selected.")
+
+def esconder_imagem(self): 
+
+    file_path = self.entry_imagem.get()
+    msg = self.entry_secret.get()
+
+    if msg != "":
+        secret = lsb.hide(file_path, "Hello World")
+
+        #Alterar depois
+        secret.save("./Lenna-secret.png")
+        clear_message = lsb.reveal("./Lenna-secret.png")
