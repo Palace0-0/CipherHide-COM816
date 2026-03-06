@@ -69,7 +69,7 @@ class App(ctk.CTk):
         self.btn_gerar = ctk.CTkButton(
             self.frame_esquerdo,
             text="Gerar chave",
-            command=self.gerar_chave
+            command=lambda : func.gerar_chave(self)
         )
         self.btn_gerar.grid(row=7, column=0, padx=20, pady=25, sticky="ew")
 
@@ -159,38 +159,41 @@ class App(ctk.CTk):
         label_img.grid(row=1, column=0, padx=20, pady=(10,5), sticky="w")
 
         self.entry_imagem = ctk.CTkEntry(self.frame_esteg)
-        self.entry_imagem.grid(row=2, column=0, columnspan=2, padx=20, sticky="ew")
+        self.entry_imagem.grid(row=2, column=0, columnspan=3, padx=20, pady=10, sticky="ew")
 
         # mensagem secreta
         label_secret = ctk.CTkLabel(self.frame_esteg, text="Mensagem secreta")
         label_secret.grid(row=3, column=0, padx=20, pady=(15,5), sticky="w")
 
         self.entry_secret = ctk.CTkEntry(self.frame_esteg)
-        self.entry_secret.grid(row=4, column=0, columnspan=2, padx=20, sticky="ew")
+        self.entry_secret.grid(row=4, column=0, columnspan=3, padx=20, pady=10, sticky="ew")
 
         # botões
+        self.btn_selec = ctk.CTkButton(
+            self.frame_esteg,
+            text="Selecionar arquivo"
+        )
+        self.btn_selec.grid(row=5, column=0, padx=20, pady=10, sticky="w")
+
         self.btn_esconder = ctk.CTkButton(
             self.frame_esteg,
             text="Esconder mensagem"
         )
-        self.btn_esconder.grid(row=5, column=0, pady=20, padx=(20,10), sticky="e")
+        self.btn_esconder.grid(row=5, column=1, padx=10, pady=10, sticky="e")
 
         self.btn_revelar = ctk.CTkButton(
             self.frame_esteg,
             text="Revelar mensagem"
         )
-        self.btn_revelar.grid(row=5, column=1, pady=20, padx=(10,20), sticky="w")
+        self.btn_revelar.grid(row=5, column=2, padx=10, pady=10, sticky="w")
 
         # resultado
         label_esteg_result = ctk.CTkLabel(self.frame_esteg, text="Resultado")
-        label_esteg_result.grid(row=6, column=0, padx=20, sticky="w")
+        label_esteg_result.grid(row=6, column=0, padx=20, pady=(10,0), sticky="w")
 
         self.result_esteg = ctk.CTkEntry(self.frame_esteg)
-        self.result_esteg.grid(row=7, column=0, columnspan=2, padx=20, pady=10, sticky="ew")
-
-    # =============================
-    # FUNÇÕES
-    # =============================
+        self.result_esteg.grid(row=7, column=0, columnspan=3, padx=20, pady=10, sticky="ew")
+  
 
     def gerar_chave(self):
         func.gerar_chave(self)
