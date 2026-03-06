@@ -5,6 +5,7 @@ import tkinter
 from tkinter import filedialog
 import os
 from stegano import lsb
+
 # -----------------------------
 # FUNÇÕES CRIPITOGRAFIA
 # -----------------------------
@@ -165,14 +166,35 @@ def selecionar_arquivos(self):
     else:
         print("No file selected.")
 
-def esconder_imagem(self): 
+def esconder_imagem(self):
 
     file_path = self.entry_imagem.get()
     msg = self.entry_secret.get()
 
     if msg != "":
-        secret = lsb.hide(file_path, "Hello World")
+        secret = lsb.hide(file_path, msg)
 
-        #Alterar depois
-        secret.save("./Lenna-secret.png")
-        clear_message = lsb.reveal("./Lenna-secret.png")
+        save_path = filedialog.asksaveasfilename(
+            defaultextension=".png",
+            filetypes=[
+                ("PNG Image", "*.png"),
+                ("All files", "*.*")
+            ],
+            title="Salvar imagem com mensagem secreta"
+        )
+
+        if save_path:
+            secret.save(save_path)
+    
+    file_path = self.entry_imagem.get()
+    msg = self.entry_secret.delete(0, 'end')
+
+def revelar_imagem(self):
+    
+    file_path = self.entry_imagem.get()
+
+    msg = lsb.reveal(file_path)
+
+    self.result_esteg.delete(0, 'end')
+    self.result_esteg.insert(0, msg)
+    

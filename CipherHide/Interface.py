@@ -178,13 +178,15 @@ class App(ctk.CTk):
 
         self.btn_esconder = ctk.CTkButton(
             self.frame_esteg,
-            text="Esconder mensagem"
+            text="Esconder mensagem",
+            command=lambda:func.esconder_imagem(self)
         )
         self.btn_esconder.grid(row=5, column=1, padx=10, pady=10, sticky="e")
 
         self.btn_revelar = ctk.CTkButton(
             self.frame_esteg,
-            text="Revelar mensagem"
+            text="Revelar mensagem",
+            command=lambda:func.revelar_imagem(self)
         )
         self.btn_revelar.grid(row=5, column=2, padx=10, pady=10, sticky="w")
 
