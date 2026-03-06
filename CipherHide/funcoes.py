@@ -2,6 +2,10 @@ from cryptography.fernet import Fernet
 from cryptography.hazmat.primitives.asymmetric import rsa, padding
 from cryptography.hazmat.primitives import serialization, hashes
 
+import tkinter
+from tkinter import filedialog
+import os
+
 
 def gerar_chave(self):
 
@@ -133,3 +137,23 @@ def decripitografar(self):
         self.result.delete(0, "end")
 
         self.result.insert(0, ciphertext.decode())
+
+def selecionar_arquivos(self):
+    
+    root = tkinter.Tk()
+    root.withdraw()
+
+    # Abre a janela para selecionar arquivo e retrona o caminho
+    file_path = filedialog.askopenfilename(
+        parent=root,
+        initialdir=os.getcwd(), # Start in the current directory
+        title="Please select a file",
+        filetypes=[("Image files", "*.png"), ("Image files", "*.jpeg*"), ("All files", "*.*")] # Filtra os tipos de arquivos a serem selecionados
+    )
+
+    if file_path:
+        self.entry_imagem.delete(0,'end')
+        self.entry_imagem.insert(0, file_path)
+        
+    else:
+        print("No file selected.")

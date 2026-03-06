@@ -12,17 +12,17 @@ class App(ctk.CTk):
         self.title("CipherHider")
         self.geometry("900x600")
 
-        # =============================
+        # -----------------------------
         # GRID PRINCIPAL
-        # =============================
+        # -----------------------------
 
         self.grid_columnconfigure(0, weight=1)
         self.grid_columnconfigure(1, weight=3)
         self.grid_rowconfigure(0, weight=1)
 
-        # =============================
+        # -----------------------------
         # FRAME ESQUERDO (GERAR CHAVE)
-        # =============================
+        # -----------------------------
 
         self.frame_esquerdo = ctk.CTkFrame(self)
         self.frame_esquerdo.grid(row=0, column=0, padx=15, pady=15, sticky="nsew")
@@ -73,9 +73,9 @@ class App(ctk.CTk):
         )
         self.btn_gerar.grid(row=7, column=0, padx=20, pady=25, sticky="ew")
 
-        # =============================
+        # -----------------------------
         # FRAME DIREITO
-        # =============================
+        # -----------------------------
 
         self.frame_direito = ctk.CTkFrame(self)
         self.frame_direito.grid(row=0, column=1, padx=15, pady=15, sticky="nsew")
@@ -84,9 +84,9 @@ class App(ctk.CTk):
         self.frame_direito.grid_rowconfigure(1, weight=1)
         self.frame_direito.grid_columnconfigure(0, weight=1)
 
-        # =============================
+        # -----------------------------
         # MÓDULO CRIPTOGRAFIA
-        # =============================
+        # -----------------------------
 
         self.frame_crypto = ctk.CTkFrame(self.frame_direito)
         self.frame_crypto.grid(row=0, column=0, padx=10, pady=10, sticky="nsew")
@@ -138,9 +138,9 @@ class App(ctk.CTk):
         self.result = ctk.CTkEntry(self.frame_crypto)
         self.result.grid(row=7, column=0, columnspan=2, padx=20, pady=10, sticky="ew")
 
-        # =============================
+        # -----------------------------
         # MÓDULO ESTEGANOGRAFIA
-        # =============================
+        # -----------------------------
 
         self.frame_esteg = ctk.CTkFrame(self.frame_direito)
         self.frame_esteg.grid(row=1, column=0, padx=10, pady=10, sticky="nsew")
@@ -171,7 +171,8 @@ class App(ctk.CTk):
         # botões
         self.btn_selec = ctk.CTkButton(
             self.frame_esteg,
-            text="Selecionar arquivo"
+            text="Selecionar arquivo",
+            command=lambda: func.selecionar_arquivos(self)
         )
         self.btn_selec.grid(row=5, column=0, padx=20, pady=10, sticky="w")
 
@@ -195,9 +196,13 @@ class App(ctk.CTk):
         self.result_esteg.grid(row=7, column=0, columnspan=3, padx=20, pady=10, sticky="ew")
   
 
-    def gerar_chave(self):
-        func.gerar_chave(self)
-
-
+#Solução para finalizar todas fuções e timers que continuariam a rodar mesmo apos fechar aplicação
 app = App()
+
+def fechar():
+    app.quit()
+    app.destroy()
+
+app.protocol("WM_DELETE_WINDOW", fechar)
+
 app.mainloop()
