@@ -17,4 +17,4 @@ def gerar_arquivo(nome, tamanho_kb):
 
 # gerar arquivos
 gerar_arquivo("texto_1kb.txt", 1)
-gerar_arquivo("texto_100kb.txt", 100)
+#gerar_arquivo("texto_100kb.txt", 100)
