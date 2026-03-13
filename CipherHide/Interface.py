@@ -1,6 +1,7 @@
 import customtkinter as ctk
 import Funcoes as func
 
+
 ctk.set_appearance_mode("dark")
 
 
